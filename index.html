@@ -3,24 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skadapa1's Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Skadapa1 | Academic Researcher Portfolio</title>
+    <!-- Load Tailwind CSS from CDN for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family - highly readable and professional -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Very light gray background */
+        }
+        /* Custom class for the active navigation link */
+        .nav-link.active {
+            @apply text-blue-700 bg-blue-100 font-bold border-b-2 border-blue-700;
+        }
+        /* Style for academic content cards */
+        .academic-card {
+            @apply bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300;
+        }
+        .section-header {
+            @apply text-3xl font-extrabold text-gray-800 border-b-4 border-blue-500 pb-2 mb-8;
+        }
+        /* Custom button style for links */
+        .btn-primary {
+            @apply inline-block px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition duration-150;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+
+        // Global state to track the active page
+        let currentPage = 'home';
+
+        // Function to show the selected page
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            // Show the selected page
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.classList.remove('hidden');
+                currentPage = pageId;
+            }
+
+            // Update active navigation link styling
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+            // Update URL hash for sharing/bookmarking
+            window.location.hash = pageId;
+        }
+
+        // Event listener for navigation clicks
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(link.getAttribute('data-page'));
+                });
+            });
+
+            // Check URL hash on load to determine which page to display
+            const initialPage = window.location.hash ? window.location.hash.substring(1) : 'home';
+            showPage(initialPage);
+        });
+
+        // Simple form submission function (prevents default action)
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const messageContainer = document.getElementById('contact-message');
+            messageContainer.textContent = 'Thank you for your message! This is a static site demo, so the form data is not actually sent.';
+            messageContainer.classList.remove('hidden');
+            messageContainer.classList.add('bg-green-100', 'text-green-800', 'p-3', 'mt-4');
+            form.reset();
+        }
+    </script>
 </head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+<body class="min-h-screen">
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo/Name -->
+                <div class="text-2xl font-bold text-gray-900">
+                    Skadapa1, PhD
+                </div>
+
+                <!-- Navigation Links (UPDATED) -->
+                <nav class="flex space-x-4">
+                    <a href="#home" data-page="home" class="nav-link px-3 py-2 text-gray-600 hover:text-blue-700 hover:bg-gray-50 rounded-md text-sm transition duration-150">Home</a>
+                    <a href="#research" data-page="research" class="nav-link px-3 py-2 text-gray-600 hover:text-blue-700 hover:bg-gray-50 rounded-md text-sm transition duration-150">Research</a>
+                    <a href="#publications" data-page="publications" class="nav-link px-3 py-2 text-gray-600 hover:text-blue-700 hover:bg-gray-50 rounded-md text-sm transition duration-150">Publications</a>
+                    <a href="#cv" data-page="cv" class="nav-link px-3 py-2 text-gray-600 hover:text-blue-700 hover:bg-gray-50 rounded-md text-sm transition duration-150">CV</a>
+                    <a href="#contact" data-page="contact" class="nav-link px-3 py-2 text-gray-600 hover:text-blue-700 hover:bg-gray-50 rounded-md text-sm transition duration-150">Contact</a>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <h1>Welcome to My Portfolio!</h1>
-        <p>This is your home page. Start filling it with an introduction to your work.</p>
-        </main>
+    <!-- Main Content Area -->
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+        <!-- HOME SECTION -->
+        <section id="home" class="page-content">
+            <div class="academic-card max-w-4xl mx-auto text-center">
+                <!-- Placeholder Image (replace with your photo) -->
+                <img src="https://placehold.co/150x150/e0e7ff/3f51b5?text=Your+Photo" alt="Skadapa1 Profile" class="mx-auto rounded-full mb-6 ring-4 ring-blue-300">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-3">Dr. Skadapa1: Dedicated to [Your Field] Research</h1>
+                <p class="text-xl text-gray-600 mb-6">
+                    [Your Title, e.g., PhD Candidate in Computational Physics at University X]
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                    Welcome to my official academic portfolio. My research focuses on leveraging advanced [Methodology, e.g., Machine Learning] to solve critical problems in [Domain, e.g., renewable energy systems]. I am passionate about interdisciplinary collaboration and translating theoretical findings into practical applications.
+                </p>
+                <a href="#research" data-page="research" class="btn-primary nav-link">Explore My Research</a>
+            </div>
+        </section>
+        
+        <!-- NEW RESEARCH SECTION (Overview) -->
+        <section id="research" class="page-content hidden">
+            <h2 class="section-header">Core Research Areas</h2>
+            <div class="space-y-8">
+                <div class="academic-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-3">
+                        Project 1: Advanced [Domain] Modeling
+                    </h3>
+                    <p class="text-gray-700 mb-4">
+                        My primary focus involves developing novel numerical methods to simulate complex [physical/social/data] phenomena. This work is critical for improving predictability and efficiency in areas like [Application A] and [Application B]. I utilize high-performance computing (HPC) environments to manage large-scale simulations.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs font-medium bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full">Numerical Methods</span>
+                        <span class="text-xs font-medium bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full">HPC</span>
+                        <span class="text-xs font-medium bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full">Big Data Analysis</span>
+                        <a href="#publications" data-page="publications" class="btn-primary nav-link">See Related Publications</a>
+                    </div>
+                </div>
+
+                <div class="academic-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-3">
+                        Project 2: Interdisciplinary Data Fusion
+                    </h3>
+                    <p class="text-gray-700 mb-4">
+                        This collaboration with the [Department Name] focuses on integrating heterogeneous datasets from [Source 1] and [Source 2]. The goal is to create a holistic, predictive model for [Outcome]. This project highlights my skills in cross-field communication and API integration.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs font-medium bg-yellow-100 text-yellow-700 px-2.5 py-0.5 rounded-full">Interdisciplinary</span>
+                        <span class="text-xs font-medium bg-yellow-100 text-yellow-700 px-2.5 py-0.5 rounded-full">Python (Pandas)</span>
+                        <a href="#cv" data-page="cv" class="btn-primary !bg-gray-600 nav-link">View Technical Skills</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PUBLICATIONS SECTION (Repurposed from old #research) -->
+        <section id="publications" class="page-content hidden">
+            <h2 class="section-header">Recent Publications & Submissions</h2>
+            <div class="space-y-8">
+                
+                <!-- Publication 1 -->
+                <article class="academic-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-2">
+                        1. Title of Published Journal Article or Conference Paper
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        **Journal/Venue:** Journal of Advanced Computing (JAC), 2024 | **DOI:** 10.1234/jac.2024.1
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        **Abstract:** This paper proposes a novel framework for [key methodology] to enhance the accuracy of [research goal]. We demonstrated a 15% improvement over existing state-of-the-art models in testing conditions.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs font-medium bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full">Computational Physics</span>
+                        <span class="text-xs font-medium bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full">Machine Learning</span>
+                        <a href="#" class="btn-primary">View PDF (Mock Link)</a>
+                        <a href="https://github.com/skadapa1/research_repo_1" target="_blank" class="btn-primary !bg-gray-600">Code Repository</a>
+                    </div>
+                </article>
+
+                <!-- Publication 2 -->
+                <article class="academic-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-2">
+                        2. Key Findings in [Specific Topic]
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        **Type:** Working Paper, Expected Submission Q1 2025 | **Co-Authors:** Dr. Jane Doe
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        **Summary:** Investigating the correlation between [Factor A] and [Factor B] in large-scale datasets. This work forms the foundation of the second chapter of my dissertation.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs font-medium bg-pink-100 text-pink-700 px-2.5 py-0.5 rounded-full">Dissertation Work</span>
+                        <span class="text-xs font-medium bg-pink-100 text-pink-700 px-2.5 py-0.5 rounded-full">Data Analysis</span>
+                        <a href="#" class="btn-primary !bg-gray-400 cursor-not-allowed" disabled>In Review</a>
+                        <a href="https://github.com/skadapa1/research_repo_2" target="_blank" class="btn-primary !bg-gray-600">Code Repository</a>
+                    </div>
+                </article>
+
+                <p class="text-center text-gray-500 italic pt-4">
+                    See my full publication record on my CV.
+                </p>
+            </div>
+        </section>
+
+        <!-- CV SECTION (Repurposed from old #about) -->
+        <section id="cv" class="page-content hidden">
+            <h2 class="section-header">Curriculum Vitae (CV) & Biography</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Bio Column -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="academic-card">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Biography</h3>
+                        <p class="text-gray-700">
+                            I am a third-year PhD researcher specializing in **[Your Specific Focus]**. My background in [Undergraduate Degree] from [University] gave me a solid foundation in [Key Skills]. Over the past [Number] years, I have developed expertise in [Tool 1], [Tool 2], and statistical modeling. Outside of my research, I enjoy [Hobby 1] and mentoring junior students in my lab.
+                        </p>
+                    </div>
+
+                    <div class="academic-card">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Education Highlights</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>**Ph.D. in [Your Subject]** - [University Name] (Expected Graduation: YYYY)</li>
+                            <li>**M.S. in [Your Subject]** - [University Name] (YYYY)</li>
+                            <li>**B.S. in [Your Subject]** - [University Name] (YYYY)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CV and Key Skills Column -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="academic-card bg-blue-50">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Download Full CV</h3>
+                        <p class="text-gray-700 mb-4">
+                            A detailed breakdown of my academic, teaching, and service activities.
+                        </p>
+                        <a href="#" class="btn-primary w-full text-center !bg-blue-600">Download CV (PDF)</a>
+                    </div>
+
+                    <div class="academic-card">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Technical Skills</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-sm font-medium bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Python</span>
+                            <span class="text-sm font-medium bg-gray-200 text-gray-800 px-3 py-1 rounded-full">R/Statistics</span>
+                            <span class="text-sm font-medium bg-gray-200 text-gray-800 px-3 py-1 rounded-full">LaTeX</span>
+                            <span class="text-sm font-medium bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Git/GitHub</span>
+                            <span class="text-sm font-medium bg-gray-200 text-gray-800 px-3 py-1 rounded-full">TensorFlow</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="page-content hidden">
+            <h2 class="section-header">Contact & Social Links</h2>
+            <div class="max-w-xl mx-auto academic-card">
+                <p class="text-lg text-gray-700 mb-6">
+                    I am open to collaborations and opportunities. Feel free to reach out regarding my research or potential projects.
+                </p>
+
+                <!-- Contact Form (Non-functional in static site, but looks professional) -->
+                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+                        <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
+                        <input type="email" id="email" name="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                        <textarea id="message" name="message" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary !bg-blue-600">Send Message</button>
+                </form>
+
+                <div id="contact-message" class="hidden rounded-md text-sm transition duration-300"></div>
+
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Professional Links</h3>
+                    <div class="flex space-x-6">
+                        <a href="https://github.com/skadapa1" target="_blank" class="text-gray-500 hover:text-blue-600 transition duration-150">
+                            <!-- SVG for GitHub Icon -->
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.418 2.867 8.134 6.83 9.48.5.092.646-.233.646-.521 0-.246-.01-1.017-.014-1.897-2.782.605-3.367-1.341-3.367-1.341-.454-1.15-.186-1.547-.186-1.547.939-.652 1.423.098 1.423.098.832 1.42 2.18 1.017 2.704.776.084-.605.328-1.017.596-1.248-2.078-.236-4.26-1.043-4.26-4.646 0-1.024.368-1.861.967-2.518-.1-.237-.418-1.196.09-2.483 0 0 .787-.252 2.574.966 1.84-.51 3.824-.51 5.664 0 1.787-1.218 2.574-.966 2.574-.966.508 1.287.18 2.246.09 2.483.593.657.965 1.494.965 2.518 0 3.612-2.186 4.409-4.268 4.643.336.289.63.864.63 1.758 0 1.248-.01 2.253-.01 2.559 0 .288.146.617.653.518C19.137 20.142 22 16.425 22 12.017 22 6.484 17.523 2 12 2z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <!-- Replace # with your actual links -->
+                        <a href="#" target="_blank" class="text-gray-500 hover:text-blue-600 transition duration-150">
+                            <!-- SVG for LinkedIn Icon -->
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm0 9c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm0 9c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm19.96 0c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm0 9c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm0 9c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm0 9c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm0 9c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" class="text-gray-500 hover:text-blue-600 transition duration-150">
+                             <!-- Placeholder for Google Scholar -->
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2.5-5.5h-2V14h2.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5H9v2h.5c.28 0 .5.22.5.5s-.22.5-.5.5H9v-2h.5c.28 0 .5.22.5.5s-.22.5-.5.5H9v-2h2.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5zm5-4.5h-2V14h2.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5H14v2h.5c.28 0 .5.22.5.5s-.22.5-.5.5H14v-2h.5c.28 0 .5.22.5.5s-.22.5-.5.5H14v-2h2.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            &copy; 2025 Skadapa1. Hosted for free on GitHub Pages.
+        </div>
+    </footer>
+
 </body>
 </html>
